@@ -2,6 +2,9 @@
   <div class="dashboard-editor-container">
     <github-corner class="github-corner" />
 
+    <p>name: {{ name }}</p>
+    <p>roles: {{ roles }}</p>
+
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
@@ -85,6 +88,7 @@ import PieChart from './components/PieChart.vue'
 import RadarChart from './components/RadarChart.vue'
 import TodoList from './components/TodoList/index.vue'
 import TransactionTable from './components/TransactionTable.vue'
+import { UserModule } from '@/store/modules/user'
 
 const lineChartData: { [type: string]: ILineChartData } = {
   newVisitis: {
@@ -121,6 +125,14 @@ const lineChartData: { [type: string]: ILineChartData } = {
 })
 export default class extends Vue {
   private lineChartData = lineChartData.newVisitis
+
+  get name() {
+    return UserModule.name
+  }
+
+  get roles() {
+    return UserModule.roles
+  }
 
   private handleSetLineChartData(type: string) {
     this.lineChartData = lineChartData[type]
