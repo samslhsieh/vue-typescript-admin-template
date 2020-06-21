@@ -12,7 +12,8 @@ import elementKoLocale from 'element-ui/lib/locale/lang/ko'
 
 // User defined lang
 import enLocale from './en'
-import zhLocale from './zh'
+import zhTwLocale from './zh-tw'
+import zhCnLocale from './zh-cn'
 import esLocale from './es'
 import jaLocale from './ja'
 import koLocale from './ko'
@@ -24,8 +25,12 @@ const messages = {
     ...enLocale,
     ...elementEnLocale
   },
-  zh: {
-    ...zhLocale,
+  'zh-tw': {
+    ...zhTwLocale,
+    ...elementZhLocale
+  },
+  'zh-cn': {
+    ...zhCnLocale,
     ...elementZhLocale
   },
   es: {
