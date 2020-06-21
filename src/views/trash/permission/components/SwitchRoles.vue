@@ -13,14 +13,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { UserModule } from '@/store/modules/user'
+import { AuthModule } from '@/store/modules/auth'
 
 @Component({
   name: 'SwitchRoles'
 })
 export default class extends Vue {
   get roles() {
-    return UserModule.roles
+    return AuthModule.roles
   }
 
   get switchRoles() {
@@ -28,7 +28,7 @@ export default class extends Vue {
   }
 
   set switchRoles(value) {
-    UserModule.ChangeRoles(value).then(() => {
+    AuthModule.ChangeRoles(value).then(() => {
       this.$emit('change')
     })
   }

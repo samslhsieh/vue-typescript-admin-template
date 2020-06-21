@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { UserModule } from '@/store/modules/user'
+import { AuthModule } from '@/store/modules/auth'
 import AdminDashboard from './admin/index.vue'
 import EditorDashboard from './editor/index.vue'
 
@@ -21,7 +21,7 @@ export default class extends Vue {
   private currentRole = 'admin-dashboard'
 
   get roles() {
-    return UserModule.roles
+    return AuthModule.roles
   }
 
   created() {

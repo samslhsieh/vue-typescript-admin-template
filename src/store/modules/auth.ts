@@ -1,12 +1,12 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { login, logout, getUserInfo } from '@/api/users'
+import { login, logout, getUserInfo } from '@/api/auth'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
 import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
 
-export interface IUserState {
+export interface IAuthState {
   token: string
   name: string
   avatar: string
@@ -15,8 +15,8 @@ export interface IUserState {
   email: string
 }
 
-@Module({ dynamic: true, store, name: 'user' })
-class User extends VuexModule implements IUserState {
+@Module({ dynamic: true, store, name: 'auth' })
+class Auth extends VuexModule implements IAuthState {
   public token = getToken() || ''
   public name = ''
   public avatar = ''
@@ -123,4 +123,4 @@ class User extends VuexModule implements IUserState {
   }
 }
 
-export const UserModule = getModule(User)
+export const AuthModule = getModule(Auth)

@@ -88,7 +88,7 @@ import PieChart from './components/PieChart.vue'
 import RadarChart from './components/RadarChart.vue'
 import TodoList from './components/TodoList/index.vue'
 import TransactionTable from './components/TransactionTable.vue'
-import { UserModule } from '@/store/modules/user'
+import { AuthModule } from '@/store/modules/auth'
 
 const lineChartData: { [type: string]: ILineChartData } = {
   newVisitis: {
@@ -127,11 +127,11 @@ export default class extends Vue {
   private lineChartData = lineChartData.newVisitis
 
   get name() {
-    return UserModule.name
+    return AuthModule.name
   }
 
   get roles() {
-    return UserModule.roles
+    return AuthModule.roles
   }
 
   private handleSetLineChartData(type: string) {

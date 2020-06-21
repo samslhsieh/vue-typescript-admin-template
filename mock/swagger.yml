@@ -477,99 +477,7 @@ paths:
                           $ref: '#/components/schemas/User'
         401:
           $ref: '#/components/responses/Unauthorized'
-  /users/register:
-    post:
-      tags:
-        - users
-      summary: Create user
-      description: This can only be done by the logged in user.
-      operationId: register
-      parameters:
-        - name: user
-          in: query
-          required: true
-          description: The data for created user.
-          schema:
-            $ref: '#/components/schemas/User'
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    format: int32
-  /users/login:
-    post:
-      tags:
-        - users
-      summary: Logs user into the system
-      description: Use username and password to login.
-      operationId: login
-      parameters:
-        - name: username
-          in: query
-          required: true
-          description: The user name for login.
-          schema:
-            $ref: '#/components/schemas/User/properties/username'
-        - name: password
-          in: query
-          required: true
-          description: The password for login in clear text.
-          schema:
-            $ref: '#/components/schemas/User/properties/password'
-      responses:
-        200:
-          description: OK
-          headers:
-            X-Rate-Limit:
-              schema:
-                type: integer
-                format: int32
-              description: calls per hour allowed by the user.
-            X-Expires-After:
-              schema:
-                type: string
-                format: date-time
-              description: date in UTC when token expires.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    format: int32
-                  data:
-                    type: object
-                    properties:
-                      accessToken:
-                        type: string
-                        example: admin-token
-        400:
-          $ref: '#/components/responses/InvalidUser'
-  /users/logout:
-    post:
-      tags:
-        - users
-      summary: Logs out current logged in user session
-      description: Log out current session.
-      operationId: logout
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    format: int32
+
   /users/{username}:
     get:
       tags:
@@ -683,7 +591,101 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
-  /users/info:
+
+  /users/register:
+    post:
+      tags:
+        - users
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: register
+      parameters:
+        - name: user
+          in: query
+          required: true
+          description: The data for created user.
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+  /auth/login:
+    post:
+      tags:
+        - users
+      summary: Logs user into the system
+      description: Use username and password to login.
+      operationId: login
+      parameters:
+        - name: username
+          in: query
+          required: true
+          description: The user name for login.
+          schema:
+            $ref: '#/components/schemas/User/properties/username'
+        - name: password
+          in: query
+          required: true
+          description: The password for login in clear text.
+          schema:
+            $ref: '#/components/schemas/User/properties/password'
+      responses:
+        200:
+          description: OK
+          headers:
+            X-Rate-Limit:
+              schema:
+                type: integer
+                format: int32
+              description: calls per hour allowed by the user.
+            X-Expires-After:
+              schema:
+                type: string
+                format: date-time
+              description: date in UTC when token expires.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                        example: admin-token
+        400:
+          $ref: '#/components/responses/InvalidUser'
+  /auth/logout:
+    post:
+      tags:
+        - users
+      summary: Logs out current logged in user session
+      description: Log out current session.
+      operationId: logout
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+  /auth/me:
     post:
       tags:
         - users

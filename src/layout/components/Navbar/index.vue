@@ -77,7 +77,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
-import { UserModule } from '@/store/modules/user'
+import { AuthModule } from '@/store/modules/auth'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import ErrorLog from '@/components/ErrorLog/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
@@ -108,7 +108,7 @@ export default class extends Vue {
   }
 
   get avatar() {
-    return UserModule.avatar
+    return AuthModule.avatar
   }
 
   private toggleSideBar() {
@@ -116,7 +116,7 @@ export default class extends Vue {
   }
 
   private async logout() {
-    await UserModule.LogOut()
+    await AuthModule.LogOut()
     this.$router.push(`/login?redirect=${this.$route.fullPath}`)
   }
 }
