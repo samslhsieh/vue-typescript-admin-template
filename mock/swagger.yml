@@ -691,7 +691,7 @@ paths:
         - users
       summary: Get current user info
       description: This can only be done by the logged in user.
-      operationId: getUserInfo
+      operationId: getMe
       security:
         - AccessTokenAuth: []
       responses:

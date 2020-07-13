@@ -1,10 +1,10 @@
 import faker from 'faker'
 import { Response, Request } from 'express'
-import { IUserData } from '../src/api/types'
+import { IUser } from '../src/api/types'
 
-const userList: IUserData[] = [
+const userList: IUser[] = [
   {
-    id: 0,
+    id: 1,
     username: 'admin',
     password: 'any',
     name: 'Super Admin',
@@ -12,10 +12,16 @@ const userList: IUserData[] = [
     introduction: 'I am a super administrator',
     email: 'admin@test.com',
     phone: '1234567890',
-    roles: ['admin'],
+    roles: [{ id: 1, name: 'admin', label: '編輯者' }],
+    permissions: [
+      { id: 1, name: '檢視', label: 'view' },
+      { id: 2, name: '編輯', label: 'edit' },
+      { id: 3, name: '刪除', label: 'delete' }
+    ],
+    projects: []
   },
   {
-    id: 1,
+    id: 2,
     username: 'editor',
     password: 'any',
     name: 'Normal Editor',
@@ -23,12 +29,17 @@ const userList: IUserData[] = [
     introduction: 'I am an editor',
     email: 'editor@test.com',
     phone: '1234567890',
-    roles: ['editor'],
+    roles: [{ id: 2, name: 'editor', label: '編輯者' }],
+    permissions: [
+      { id: 1, name: 'view', label: '檢視' },
+      { id: 2, name: 'edit', label: '編輯' }
+    ],
+    projects: []
   }
 ]
 const userCount = 100
 
-for (let i = 2; i < userCount; i++) {
+for (let i = 3; i < userCount; i++) {
   userList.push({
     id: i,
     username: 'user_' + faker.random.alphaNumeric(9),
@@ -38,7 +49,9 @@ for (let i = 2; i < userCount; i++) {
     introduction: faker.lorem.sentence(20),
     email: faker.internet.email(),
     phone: faker.phone.phoneNumber(),
-    roles: ['visitor']
+    roles: [{ id: 3, name: 'guest', label: '編輯者' }],
+    permissions: [],
+    projects: []
   })
 }
 
@@ -72,7 +85,7 @@ export const logout = (req: Request, res: Response) => {
   })
 }
 
-export const getUserInfo = (req: Request, res: Response) => {
+export const getMe = (req: Request, res: Response) => {
   // Mock data based on access token
   return res.json({
     code: 20000,

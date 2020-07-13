@@ -11,8 +11,7 @@ const userList: IUserData[] = [
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     introduction: 'I am a super administrator',
     email: 'admin@test.com',
-    phone: '1234567890',
-    roles: ['admin'],
+    phone: '1234567890'
   },
   {
     id: 1,
@@ -22,8 +21,7 @@ const userList: IUserData[] = [
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     introduction: 'I am an editor',
     email: 'editor@test.com',
-    phone: '1234567890',
-    roles: ['editor'],
+    phone: '1234567890'
   }
 ]
 const userCount = 100
@@ -37,8 +35,7 @@ for (let i = 2; i < userCount; i++) {
     avatar: faker.image.imageUrl(),
     introduction: faker.lorem.sentence(20),
     email: faker.internet.email(),
-    phone: faker.phone.phoneNumber(),
-    roles: ['visitor']
+    phone: faker.phone.phoneNumber()
   })
 }
 

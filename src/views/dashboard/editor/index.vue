@@ -8,9 +8,9 @@
         Your roles:
         <span
           v-for="item in roles"
-          :key="item"
+          :key="item.label"
           class="info-roles"
-        >{{ item }}</span>
+        >{{ item.name }}</span>
       </pan-thumb>
       <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
       <div class="info-container">

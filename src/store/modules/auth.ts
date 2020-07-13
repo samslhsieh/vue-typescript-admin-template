@@ -5,13 +5,15 @@ import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
+import { IPermission, IProject, IRole, IUser } from '@/api/types'
 
 export interface IAuthState {
   token: string
   name: string
   avatar: string
   introduction: string
-  roles: string[]
+  roles: IRole[]
+  permissions: IPermission[]
   email: string
 }
 
@@ -21,7 +23,9 @@ class Auth extends VuexModule implements IAuthState {
   public name = ''
   public avatar = ''
   public introduction = ''
-  public roles: string[] = []
+  public roles: IRole[] = []
+  public permissions: IPermission[] = []
+  public projects: IProject[] = []
   public email = ''
 
   @Mutation
@@ -45,8 +49,13 @@ class Auth extends VuexModule implements IAuthState {
   }
 
   @Mutation
-  private SET_ROLES(roles: string[]) {
+  private SET_ROLES(roles: IRole[]) {
     this.roles = roles
+  }
+
+  @Mutation
+  private SET_PERMISSIONS(permissions: IPermission[]) {
+    this.permissions = permissions
   }
 
   @Mutation
@@ -55,7 +64,7 @@ class Auth extends VuexModule implements IAuthState {
   }
 
   @Action
-  public async Login(userInfo: { username: string, password: string}) {
+  public async Login(userInfo: { username: string; password: string }) {
     let { username, password } = userInfo
     username = username.trim()
     const { data } = await login({ username, password })
@@ -75,16 +84,19 @@ class Auth extends VuexModule implements IAuthState {
     if (this.token === '') {
       throw Error('GetUserInfo: token is undefined!')
     }
-    const { data } = await getUserInfo({ /* Your params here */ })
+    const { data } = await getUserInfo({
+      /* Your params here */
+    })
     if (!data) {
       throw Error('Verification failed, please Login again.')
     }
-    const { roles, name, avatar, introduction, email } = data.user
+    const { roles, permissions, name, avatar, introduction, email } = data.user
     // roles must be a non-empty array
     if (!roles || roles.length <= 0) {
       throw Error('GetUserInfo: roles must be a non-null array!')
     }
     this.SET_ROLES(roles)
+    this.SET_PERMISSIONS(permissions)
     this.SET_NAME(name)
     this.SET_AVATAR(avatar)
     this.SET_INTRODUCTION(introduction)
@@ -93,6 +105,7 @@ class Auth extends VuexModule implements IAuthState {
 
   @Action
   public async ChangeRoles(role: string) {
+    // TODO: refactor
     // Dynamically modify permissions
     const token = role + '-token'
     this.SET_TOKEN(token)
@@ -100,9 +113,11 @@ class Auth extends VuexModule implements IAuthState {
     await this.GetUserInfo()
     resetRouter()
     // Generate dynamic accessible routes based on roles
-    PermissionModule.GenerateRoutes(this.roles)
+    PermissionModule.GenerateRoutes(this.roles, this.permissions)
+
     // Add generated routes
     router.addRoutes(PermissionModule.dynamicRoutes)
+
     // Reset visited views and cached views
     TagsViewModule.delAllViews()
   }
@@ -120,6 +135,7 @@ class Auth extends VuexModule implements IAuthState {
     TagsViewModule.delAllViews()
     this.SET_TOKEN('')
     this.SET_ROLES([])
+    this.SET_PERMISSIONS([])
   }
 }
 

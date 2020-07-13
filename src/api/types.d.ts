@@ -40,5 +40,41 @@ export interface IUserData {
   phone: string
   avatar: string
   introduction: string
-  roles: string[]
+  roles?: IRole[]
+  permissions?: IPermission[]
+}
+
+export interface IRole {
+  id: number
+  name: string
+  label: string
+}
+
+export interface IPermission {
+  id: number
+  name: string
+  label: string
+}
+
+export interface IProject {
+  id: number
+  name: string
+  label: string
+  permissions?: IPermission
+}
+
+export interface IUser {
+  id: number
+  username: string
+  password: string
+  name: string
+  email: string
+  phone: string
+  avatar: string
+  token?: string
+  roles: IRole[]
+  permissions: IPermission[]
+  projects: IProject[]
+
+  introduction?: string
 }
