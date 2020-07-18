@@ -9,6 +9,7 @@ import { IPermission, IProject, IRole, IUser } from '@/api/types'
 
 export interface IAuthState {
   token: string
+  id: number
   name: string
   avatar: string
   introduction: string
@@ -20,17 +21,23 @@ export interface IAuthState {
 @Module({ dynamic: true, store, name: 'auth' })
 class Auth extends VuexModule implements IAuthState {
   public token = getToken() || ''
-  public name = ''
-  public avatar = ''
-  public introduction = ''
+  public id: number = 0
+  public name: string = ''
+  public avatar: string = ''
+  public email: string = ''
+  public introduction: string = ''
   public roles: IRole[] = []
   public permissions: IPermission[] = []
   public projects: IProject[] = []
-  public email = ''
 
   @Mutation
   private SET_TOKEN(token: string) {
     this.token = token
+  }
+
+  @Mutation
+  private SET_ID(id: number) {
+    this.id = id
   }
 
   @Mutation
@@ -90,13 +97,14 @@ class Auth extends VuexModule implements IAuthState {
     if (!data) {
       throw Error('Verification failed, please Login again.')
     }
-    const { roles, permissions, name, avatar, introduction, email } = data.user
+    const { id, roles, permissions, name, avatar, introduction, email } = data.user
     // roles must be a non-empty array
     if (!roles || roles.length <= 0) {
       throw Error('GetUserInfo: roles must be a non-null array!')
     }
     this.SET_ROLES(roles)
     this.SET_PERMISSIONS(permissions)
+    this.SET_ID(id)
     this.SET_NAME(name)
     this.SET_AVATAR(avatar)
     this.SET_INTRODUCTION(introduction)
