@@ -12,7 +12,11 @@ const hasPermission = (permissions: IPermission[], route: RouteConfig): boolean 
   return true
 }
 
-export const filterAsyncRoutes = (routes: RouteConfig[], permissions: IPermission[]): RouteConfig[] => {
+export const filterAsyncRoutes = (routes: RouteConfig[], permissions: IPermission[] = []): RouteConfig[] => {
+  if (!permissions || !permissions.length) {
+    return []
+  }
+
   const res: RouteConfig[] = []
   routes.forEach(route => {
     const r = { ...route }
@@ -44,10 +48,11 @@ class Permission extends VuexModule implements IPermissionState {
   }
 
   @Action
-  public GenerateRoutes(roles: IRole[], permissions: IPermission[]) {
+  public GenerateRoutes(user: Partial<IUser>) {
+    const { roles, permissions } = user
     let accessedRoutes
     // return all routes if it is admin role
-    if (roles.some(role => role.name.includes('admin'))) {
+    if (roles && Array.isArray(roles) && roles.some(role => role.name.includes('admin'))) {
       accessedRoutes = asyncRoutes
     } else {
       accessedRoutes = filterAsyncRoutes(asyncRoutes, permissions)

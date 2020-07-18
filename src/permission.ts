@@ -41,7 +41,7 @@ router.beforeEach(async (to: Route, _: Route, next: any) => {
           const permissions = AuthModule.permissions
 
           // Generate accessible routes map based on role
-          PermissionModule.GenerateRoutes(roles, permissions)
+          PermissionModule.GenerateRoutes({ roles, permissions })
 
           // Dynamically add accessible routes
           router.addRoutes(PermissionModule.dynamicRoutes)

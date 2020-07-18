@@ -121,7 +121,7 @@ class Auth extends VuexModule implements IAuthState {
     await this.GetUserInfo()
     resetRouter()
     // Generate dynamic accessible routes based on roles
-    PermissionModule.GenerateRoutes(this.roles, this.permissions)
+    PermissionModule.GenerateRoutes({ roles: this.roles, permissions: this.permissions })
 
     // Add generated routes
     router.addRoutes(PermissionModule.dynamicRoutes)
