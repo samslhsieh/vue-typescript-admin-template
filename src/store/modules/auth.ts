@@ -142,6 +142,7 @@ class Auth extends VuexModule implements IAuthState {
     // Reset visited views and cached views
     TagsViewModule.delAllViews()
     this.SET_TOKEN('')
+    this.SET_ID(0)
     this.SET_ROLES([])
     this.SET_PERMISSIONS([])
   }
