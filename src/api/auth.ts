@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-export const getUserInfo = (data: any) =>
+export const getUserInfo = (params: any) =>
   request({
     url: '/auth/me',
-    method: 'post',
-    data
+    method: 'get',
+    params
   })
 
 export const login = (data: any) =>
