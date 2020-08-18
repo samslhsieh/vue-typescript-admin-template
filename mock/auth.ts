@@ -1,13 +1,11 @@
 import faker from 'faker'
 import { Response, Request } from 'express'
-import { IUser } from '../src/api/types'
+import {IUser} from "../src/api/types";
 
-const userList: IUser[] = [
-  {
+const users: any = {
+  admin: {
     id: 1,
-    username: 'admin',
-    password: 'any',
-    name: 'Super Admin',
+    name: 'admin',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     introduction: 'I am a super administrator',
     email: 'admin@test.com',
@@ -20,11 +18,9 @@ const userList: IUser[] = [
     ],
     projects: []
   },
-  {
+  editor: {
     id: 2,
-    username: 'editor',
-    password: 'any',
-    name: 'Normal Editor',
+    name: 'editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     introduction: 'I am an editor',
     email: 'editor@test.com',
@@ -36,14 +32,14 @@ const userList: IUser[] = [
     ],
     projects: []
   }
-]
-const userCount = 100
+}
+
+const userList: IUser[] = [users['admin'], users['editor']]
+const userCount = 50
 
 for (let i = 3; i < userCount; i++) {
   userList.push({
     id: i,
-    username: 'user_' + faker.random.alphaNumeric(9),
-    password: faker.random.alphaNumeric(20),
     name: faker.name.findName(),
     avatar: faker.image.imageUrl(),
     introduction: faker.lorem.sentence(20),
@@ -62,17 +58,19 @@ export const register = (req: Request, res: Response) => {
 }
 
 export const login = (req: Request, res: Response) => {
-  const { username } = req.body
-  for (const user of userList) {
-    if (user.username === username) {
-      return res.json({
-        code: 20000,
-        data: {
-          accessToken: username + '-token'
-        }
-      })
-    }
+  const { username: name } = req.body
+
+  const user = users[name] && users[name].name || undefined
+
+  if (user) {
+    return res.json({
+      code: 20000,
+      data: {
+        accessToken: user + '-token'
+      }
+    })
   }
+
   return res.status(400).json({
     code: 50004,
     messaege: 'Invalid User'

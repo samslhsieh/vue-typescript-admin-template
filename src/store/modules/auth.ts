@@ -5,17 +5,18 @@ import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
-import { IPermission, IProject, IRole, IUser } from '@/api/types'
+import { IPermission, IProject, IRole } from '@/api/types'
 
 export interface IAuthState {
   token: string
   id: number
   name: string
   avatar: string
+  email: string
   introduction: string
   roles: IRole[]
   permissions: IPermission[]
-  email: string
+  projects: IProject[]
 }
 
 @Module({ dynamic: true, store, name: 'auth' })
