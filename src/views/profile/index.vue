@@ -100,7 +100,7 @@ export default class extends Vue {
       name: this.name,
       email: this.email,
       avatar: this.avatar,
-      roles: this.roles.join(' | ')
+      roles: this.roles.map(role => role.name).join(' | ')
     }
   }
 }
