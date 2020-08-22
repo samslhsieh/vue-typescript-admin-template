@@ -75,7 +75,7 @@ export default {
   login: {
     title: '타이틀',
     logIn: '로그인',
-    username: '이름',
+    account: '이름',
     password: '비밀번호',
     any: 'any',
     thirdparty: '외부 ID로 로그인',

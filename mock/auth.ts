@@ -58,7 +58,7 @@ export const register = (req: Request, res: Response) => {
 }
 
 export const login = (req: Request, res: Response) => {
-  const { username: name } = req.body
+  const { account: name } = req.body
 
   const user = users[name] && users[name].name || undefined
 

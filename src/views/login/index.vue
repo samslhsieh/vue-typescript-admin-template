@@ -15,15 +15,15 @@
         <lang-select class="set-language" />
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="account">
         <span class="svg-container">
           <svg-icon name="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          :placeholder="$t('login.username')"
-          name="username"
+          ref="account"
+          v-model="loginForm.account"
+          :placeholder="$t('login.account')"
+          name="account"
           type="text"
           tabindex="1"
           autocomplete="on"
@@ -73,11 +73,11 @@
 
       <div style="position:relative">
         <div class="tips">
-          <span>{{ $t('login.username') }} : admin </span>
+          <span>{{ $t('login.account') }} : admin </span>
           <span>{{ $t('login.password') }} : {{ $t('login.any') }} </span>
         </div>
         <div class="tips">
-          <span>{{ $t('login.username') }} : editor </span>
+          <span>{{ $t('login.account') }} : editor </span>
           <span>{{ $t('login.password') }} : {{ $t('login.any') }} </span>
         </div>
 
@@ -110,7 +110,7 @@ import { Route } from 'vue-router'
 import { Dictionary } from 'vue-router/types/router'
 import { Form as ElForm, Input } from 'element-ui'
 import { AuthModule } from '@/store/modules/auth'
-import { isValidUsername } from '@/utils/validate'
+import { isValidAccount } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect/index.vue'
 import SocialSign from './components/SocialSignin.vue'
 
@@ -122,9 +122,9 @@ import SocialSign from './components/SocialSignin.vue'
   }
 })
 export default class extends Vue {
-  private validateUsername = (rule: any, value: string, callback: Function) => {
-    if (!isValidUsername(value)) {
-      callback(new Error('Please enter the correct user name'))
+  private validateAccount = (rule: any, value: string, callback: Function) => {
+    if (!isValidAccount(value)) {
+      callback(new Error('Please enter the correct account'))
     } else {
       callback()
     }
@@ -139,12 +139,12 @@ export default class extends Vue {
   }
 
   private loginForm = {
-    username: 'admin',
+    account: 'admin',
     password: '111111'
   }
 
   private loginRules = {
-    username: [{ validator: this.validateUsername, trigger: 'blur' }],
+    account: [{ validator: this.validateAccount, trigger: 'blur' }],
     password: [{ validator: this.validatePassword, trigger: 'blur' }]
   }
 
@@ -167,8 +167,8 @@ export default class extends Vue {
   }
 
   mounted() {
-    if (this.loginForm.username === '') {
-      (this.$refs.username as Input).focus()
+    if (this.loginForm.account === '') {
+      (this.$refs.account as Input).focus()
     } else if (this.loginForm.password === '') {
       (this.$refs.password as Input).focus()
     }

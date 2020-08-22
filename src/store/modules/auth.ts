@@ -72,10 +72,10 @@ class Auth extends VuexModule implements IAuthState {
   }
 
   @Action
-  public async Login(userInfo: { username: string; password: string }) {
-    let { username, password } = userInfo
-    username = username.trim()
-    const { data } = await login({ username, password })
+  public async Login(userInfo: { account: string; password: string }) {
+    let { account, password } = userInfo
+    account = account.trim()
+    const { data } = await login({ account, password })
     setToken(data.accessToken)
     this.SET_TOKEN(data.accessToken)
   }

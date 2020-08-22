@@ -75,7 +75,7 @@ export default {
   login: {
     title: '系統登入',
     logIn: '登入',
-    username: '帳號',
+    account: '帳號',
     password: '密碼',
     any: '隨便填',
     thirdparty: '第三方登入',
