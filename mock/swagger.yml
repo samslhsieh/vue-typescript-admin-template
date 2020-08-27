@@ -471,10 +471,7 @@ paths:
                     type: integer
                     format: int32
                   data:
-                    type: object
-                    properties:
-                      user:
-                        $ref: '#/components/schemas/User'
+                    $ref: '#/components/schemas/User'
         401:
           $ref: '#/components/responses/Unauthorized'
 components:

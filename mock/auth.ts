@@ -1,6 +1,6 @@
 import faker from 'faker'
 import { Response, Request } from 'express'
-import {IUser} from "../src/api/types";
+import { IUser } from '../src/api/types'
 
 const users: any = {
   admin: {
@@ -60,7 +60,7 @@ export const register = (req: Request, res: Response) => {
 export const login = (req: Request, res: Response) => {
   const { account: name } = req.body
 
-  const user = users[name] && users[name].name || undefined
+  const user = (users[name] && users[name].name) || undefined
 
   if (user) {
     return res.json({
@@ -87,8 +87,6 @@ export const getMe = (req: Request, res: Response) => {
   // Mock data based on access token
   return res.json({
     code: 20000,
-    data: {
-      user: req.header('X-Access-Token') == 'admin-token' ? userList[0] : userList[1]
-    }
+    data: req.header('X-Access-Token') == 'admin-token' ? userList[0] : userList[1]
   })
 }

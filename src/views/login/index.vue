@@ -194,11 +194,16 @@ export default class extends Vue {
     (this.$refs.loginForm as ElForm).validate(async(valid: boolean) => {
       if (valid) {
         this.loading = true
-        await AuthModule.Login(this.loginForm)
-        this.$router.push({
-          path: this.redirect || '/',
-          query: this.otherQuery
-        })
+        try {
+          await AuthModule.Login(this.loginForm)
+          this.$router.push({
+            path: this.redirect || '/',
+            query: this.otherQuery
+          })
+        } catch (error) {
+          console.log(error)
+        }
+
         // Just to simulate the time of the request
         setTimeout(() => {
           this.loading = false

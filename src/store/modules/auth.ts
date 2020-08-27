@@ -98,7 +98,7 @@ class Auth extends VuexModule implements IAuthState {
     if (!data) {
       throw Error('Verification failed, please Login again.')
     }
-    const { id, roles, permissions, name, avatar, introduction, email } = data.user
+    const { id, roles, permissions, name, avatar, introduction, email } = data
     // roles must be a non-empty array
     if (!roles || roles.length <= 0) {
       throw Error('GetUserInfo: roles must be a non-null array!')
