@@ -1,5 +1,5 @@
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { login, logout, getUserInfo } from '@/api/auth'
+import { login, logout, getMe } from '@/api/auth'
 import { getToken, setToken, removeToken } from '@/utils/cookies'
 import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
@@ -19,14 +19,19 @@ export interface IAuthState {
   projects: IProject[]
 }
 
+export interface ILoginRequest {
+  account: string
+  password: string
+}
+
 @Module({ dynamic: true, store, name: 'auth' })
 class Auth extends VuexModule implements IAuthState {
   public token = getToken() || ''
-  public id: number = 0
-  public name: string = ''
-  public avatar: string = ''
-  public email: string = ''
-  public introduction: string = ''
+  public id = 0
+  public name = ''
+  public avatar = ''
+  public email = ''
+  public introduction = ''
   public roles: IRole[] = []
   public permissions: IPermission[] = []
   public projects: IProject[] = []
@@ -72,7 +77,7 @@ class Auth extends VuexModule implements IAuthState {
   }
 
   @Action
-  public async Login(userInfo: { account: string; password: string }) {
+  public async Login(userInfo: ILoginRequest) {
     let { account, password } = userInfo
     account = account.trim()
     const { data } = await login({ account, password })
@@ -92,7 +97,7 @@ class Auth extends VuexModule implements IAuthState {
     if (this.token === '') {
       throw Error('GetUserInfo: token is undefined!')
     }
-    const { data } = await getUserInfo({
+    const { data } = await getMe({
       /* Your params here */
     })
     if (!data) {

@@ -90,3 +90,11 @@ export const getMe = (req: Request, res: Response) => {
     data: req.header('X-Access-Token') == 'admin-token' ? userList[0] : userList[1]
   })
 }
+
+export const patchMe = (req: Request, res: Response) => {
+  // Mock data based on access token
+  return res.json({
+    code: 20000,
+    data: req.header('X-Access-Token') == 'admin-token' ? userList[0] : userList[1]
+  })
+}

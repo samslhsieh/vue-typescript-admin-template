@@ -385,7 +385,7 @@ paths:
   /auth/login:
     post:
       tags:
-        - users
+        - auth
       summary: Logs user into the system
       description: Use username and password to login.
       operationId: login
@@ -435,7 +435,7 @@ paths:
   /auth/logout:
     post:
       tags:
-        - users
+        - auth
       summary: Logs out current logged in user session
       description: Log out current session.
       operationId: logout
@@ -453,12 +453,52 @@ paths:
   /auth/me:
     get:
       tags:
-        - users
+        - auth
       summary: Get current user info
       description: This can only be done by the logged in user.
       operationId: getMe
       security:
         - AccessTokenAuth: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  data:
+                    $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags:
+        - auth
+      summary: Patch User Info
+      description: Use username and password to login.
+      operationId: patchMe
+      parameters:
+        - name: name
+          in: query
+          required: true
+          description: introduction.
+          schema:
+            $ref: '#/components/schemas/User/properties/name'
+        - name: email
+          in: query
+          required: false
+          description: introduction.
+          schema:
+            $ref: '#/components/schemas/User/properties/email'
+        - name: introduction
+          in: query
+          required: false
+          description: introduction.
+          schema:
+            $ref: '#/components/schemas/User/properties/introduction'
       responses:
         200:
           description: OK

@@ -14,7 +14,7 @@ service.interceptors.request.use(
     // Add X-Access-Token header to every request, you can add other custom headers here
     if (AuthModule.token) {
       config.headers['X-Access-Token'] = AuthModule.token
-      config.headers['Authorization'] = `Bearer ${AuthModule.token}`
+      config.headers.Authorization = `Bearer ${AuthModule.token}`
     }
     return config
   },

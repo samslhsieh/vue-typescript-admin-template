@@ -2,7 +2,7 @@ import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-dec
 import { RouteConfig } from 'vue-router'
 import { asyncRoutes, constantRoutes } from '@/router'
 import store from '@/store'
-import { IPermission, IRole, IUser } from '@/api/types'
+import { IPermission, IUser } from '@/api/types'
 
 const hasPermission = (permissions: IPermission[], route: RouteConfig): boolean => {
   if (route.meta && route.meta.permissions) {
